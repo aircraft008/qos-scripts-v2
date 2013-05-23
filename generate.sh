@@ -60,7 +60,7 @@ parse_matching_rule() {
 	append "$var" "${proto:+-p $proto}"
 	for option in $options; do
 		config_get value "$section" "$option"
-		
+
 		case "$pkt:$option" in
 			*:srchost)
 				append "$var" "-s $value"
@@ -278,14 +278,14 @@ start_interface() {
 	config_get device "$iface" device
 	config_get_bool enabled "$iface" enabled 1
 	[ -z "$device" -o 1 -ne "$enabled" ] && {
-		return 1 
+		return 1
 	}
 	config_get upload "$iface" upload
 	config_get_bool halfduplex "$iface" halfduplex
 	config_get download "$iface" download
 	config_get classgroup "$iface" classgroup
 	config_get_bool overhead "$iface" overhead 0
-	
+
 	download="${download:-${halfduplex:+$upload}}"
 	enum_classes "$classgroup"
 	for dir in ${halfduplex:-up} ${download:+down}; do
@@ -310,7 +310,7 @@ start_interface() {
 		esac
 		cstr=
 		for class in $classes; do
-			cls_var pktsize "$class" packetsize $dir 1500
+			cls_var pktsize "$class" packetsize $dir 1480
 			cls_var pktdelay "$class" packetdelay $dir 0
 			cls_var maxrate "$class" limitrate $dir 100
 			cls_var prio "$class" priority $dir 1
@@ -369,7 +369,7 @@ add_rules() {
 	local var="$1"
 	local rules="$2"
 	local prefix="$3"
-	
+
 	for rule in $rules; do
 		unset iptrule
 		config_get target "$rule" target
