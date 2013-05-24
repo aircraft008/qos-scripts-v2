@@ -17,11 +17,11 @@ config classify
 config reclassify
         option target 'Normal'
         option mark 'Priority'
-        option pktsize '480-'
+        option pktsize '560-'
 
 config reclassify
         option target 'Express'
-	option mark 'Priority'
+        option mark 'Priority'
 	option pktsize '-120'
 
 config default
