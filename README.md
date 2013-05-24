@@ -21,8 +21,8 @@ ssh -p 22 -l root router "/etc/init.d/qos restart"
 ##Custom Queues
 
 
-The __qos__ file contains a sample setup which will work out of the box. However,
-if you wish to customize it the following should be kept in mind.
+The __qos__ file contains a sample setup which will work out of the box (well, you would still have to set the upload/download speed). However,
+if you would like to modify the traffic classes, the following should be kept in mind:
 
 * The __packetsize__ argument has no use anymore (initial logic was broken).
 * Ditto for __maxsize__.
