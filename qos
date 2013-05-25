@@ -15,11 +15,6 @@ config classify
         option layer7 'skypetoskype'
 
 config reclassify
-        option target 'Normal'
-        option mark 'Priority'
-        option pktsize '560-'
-
-config reclassify
         option target 'Express'
         option mark 'Priority'
 	option pktsize '-120'
@@ -35,19 +30,18 @@ config interface 'wan'
 	option overhead '0'
 
 config classgroup 'Default'
-	option classes 'Priority Express Normal Bulk'
+	option classes 'Priority Express Bulk'
 	option default 'Bulk'
 
 config class 'Priority'
 	option avgrate '35'
+	option irate '45'
+        option duration '500'
 
 config class 'Express'
 	option avgrate '45'
-        option irate '65'
-        option duration '200'
-
-config class 'Normal'
-        option avgrate '15'
+        option irate '55'
+        option duration '500'
 
 config class 'Bulk'
 	option avgrate '5'
