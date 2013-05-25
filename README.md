@@ -1,11 +1,11 @@
 #qos-scripts-v2
 
-
 This repository contains some fixes developped for the OpenWRT QOS Scripts
 package.
 
-Queues can be still be configured as presented in the OpenWRT [documentation](http://wiki.openwrt.org/doc/uci/qos).
+Traffic rules can be still be configured as presented in the OpenWRT [documentation](http://wiki.openwrt.org/doc/uci/qos).
 
+For help in defining traffic classes please scroll down.
 
 ##Installation
 
@@ -24,9 +24,35 @@ ssh -p 22 -l root router "/etc/init.d/qos restart"
 The __qos__ file contains a sample setup which will work out of the box (well, you would still have to set the upload/download speed). However,
 if you would like to modify the traffic classes, the following should be kept in mind:
 
-* The __packetsize__ argument has no use anymore (initial logic was broken).
-* Ditto for __maxsize__.
-* The __packetdelay__ argument does not delay packets, but instead delays the
-traffic shaping action by a specified time in milliseconds.
-* The __priority__ determines the percentage of bandwidth to allocate to the m2
-parameter of the HSFC SL Service Curve (as a rule of thumb set to the same value as __avgrate__).
+The parametes available to define a traffic class are as follow,
+
+* __avgrate__ the average speed of the class in % (mandatory).
+* __irate__ the initial (burst) speed of the class in % (default disabled).
+* __duration__ the duration of the burst in ms (default disabled).
+* __maxrate__  the absolute maximum of the class in % (default 100%)
+
+The only mandatory parameter to define a traffic class is __avgrate__. As such the smallest class definable is as follow,
+
+```
+config class 'Normal'
+        option avgrate '15'
+```
+
+A full class would look like this,
+
+```
+config class 'Normal'
+        option avgrate '15'
+        option irate '50'
+        option duration '10'
+        optin maxrate '75'
+```
+
+Please note that a delay behaviour can be introduced with an __irate__ set to 0 and a duration > 0:
+
+```
+config class 'Delayed by 10 ms'
+        option avgrate '50'
+        option irate '0'
+        option duration '10'
+```
