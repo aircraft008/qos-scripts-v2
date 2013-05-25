@@ -40,7 +40,7 @@ config class 'Priority'
 
 config class 'Express'
 	option avgrate '45'
-        option irate '55'
+        option irate '50'
         option duration '500'
 
 config class 'Bulk'
