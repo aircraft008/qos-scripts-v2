@@ -48,7 +48,7 @@ config class 'Class Name'
         option maxrate '75'
 ```
 
-Please note that a delay behaviour can be introduced with an __irate__ set to 0 and a duration > 0:
+Please note that a delay behaviour can be introduced with an __irate__ set to 0 and a __duration__ > 0:
 
 ```
 config class 'Delayed by 10 ms'
