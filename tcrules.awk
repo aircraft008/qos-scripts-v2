@@ -6,31 +6,23 @@ BEGIN {
 ($1 != "") {
 	n++
 	class[n] = $1
-	prio[n] = ($2 * linespeed / 100)
-	avgrate[n] = ($3 * linespeed / 100)
-	pktsize[n] = $4
-	delay[n] = $5
-	maxrate[n] = ($6 * linespeed / 100)
-	qdisc[n] = $7
-	filter[n] = $8
+	avgrate[n] = ($2 * linespeed / 100)
+	maxrate[n] = ($3 * linespeed / 100)
+	qdisc[n] = $4
+	filter[n] = $5
+	irate[n] = ($6 * linespeed / 100)
+	duration[n] = $7
 }
 
 END {
 	for (i = 1; i <= n; i++) {
 
-		lsm1[i] = 0
-		lsm2[i] = prio[i]
-		rtm1[i] = 0
-		rtm2[i] = avgrate[i]
-
 		printf "tc class add dev "device" parent 1:1 classid 1:"class[i]"0 hfsc"
 
-		if (delay[i] > 0) {
-			printf " rt m1 " int(rtm1[i]) "kbit d " int(delay[i]) "ms m2 " int(rtm2[i]) "kbit"
-		 	printf " ls m1 " int(lsm1[i]) "kbit d " int(delay[i]) "ms m2 " int(lsm2[i]) "kbit"
+		if (duration[i] > 0) {
+			printf " sc m1 " int(irate[i]) "kbit d " int(duration[i]) "ms m2 " int(avgrate[i]) "kbit"
 		} else {
-		 	printf " rt m2 " int(rtm2[i]) "kbit"
-		 	printf " ls m2 " int(lsm2[i]) "kbit"
+		 	printf " sc m2 " int(avgrate[i]) "kbit"
 		}
 		print " ul rate " int(maxrate[i]) "kbit"
 

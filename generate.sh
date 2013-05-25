@@ -310,15 +310,14 @@ start_interface() {
 		esac
 		cstr=
 		for class in $classes; do
-			cls_var pktsize "$class" packetsize $dir 1480
-			cls_var pktdelay "$class" packetdelay $dir 0
-			cls_var maxrate "$class" limitrate $dir 100
-			cls_var prio "$class" priority $dir 1
+			cls_var maxrate "$class" maxrate $dir 100
 			cls_var avgrate "$class" avgrate $dir 0
 			cls_var qdisc "$class" qdisc $dir ""
 			cls_var filter "$class" filter $dir ""
 			config_get classnr "$class" classnr
-			append cstr "$classnr:$prio:$avgrate:$pktsize:$pktdelay:$maxrate:$qdisc:$filter" "$N"
+			cls_var irate "$class" irate $dir 0
+			cls_var duration "$class" duration $dir 0
+			append cstr "$classnr:$avgrate:$maxrate:$qdisc:$filter:$irate:$duration" "$N"
 		done
 		append ${prefix}q "$(tcrules)" "$N"
 		export dev_${dir}="ifconfig $dev up txqueuelen 5 >&- 2>&-
