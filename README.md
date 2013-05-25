@@ -34,18 +34,18 @@ The parametes available to define a traffic class are as follow,
 The only mandatory parameter to define a traffic class is __avgrate__. As such the smallest class definable is as follow,
 
 ```
-config class 'Normal'
+config class 'Class Name'
         option avgrate '15'
 ```
 
 A full class would look like this,
 
 ```
-config class 'Normal'
+config class 'Class Name'
         option avgrate '15'
         option irate '50'
         option duration '10'
-        optin maxrate '75'
+        option maxrate '75'
 ```
 
 Please note that a delay behaviour can be introduced with an __irate__ set to 0 and a duration > 0:
